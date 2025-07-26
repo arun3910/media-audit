@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Rewrite Assistant{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <h2>📝 Rewrite Assistant</h2>
+  <p>Paste a news article or URL. We'll rewrite it to be clearer and less biased — and compare tone, sentiment, and emotion scores.</p>
+
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.url.label }} {{ form.url(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      {{ form.raw_text.label }} {{ form.raw_text(class="form-control", rows="6") }}
+    </div>
+    {{ form.submit(class="btn btn-primary") }}
+  </form>
+
+  {% if result %}
+  <hr>
+  <div class="row">
+    <!-- Original Block -->
+    <div class="col-md-6">
+      <h4>📰 Original</h4>
+      <p><strong>Perspective:</strong> <span class="badge bg-info">{{ result.original_analysis.perspective_label }}</span></p>
+      <p><strong>Tone:</strong> <span class="badge bg-{{ result.original_analysis.tone_color }}">{{ result.original_analysis.tone }}</span></p>
+      <ul>
+        {% for key, value in result.original_analysis.emotion_score.items() %}
+          <li>{{ key.capitalize() }}: {{ value }}</li>
+        {% endfor %}
+      </ul>
+      <div class="border p-3 bg-light" style="white-space: pre-wrap;">{{ result.original_text }}</div>
+    </div>
+
+    <!-- Rewritten Block -->
+    <div class="col-md-6">
+      <h4>✍️ Rewritten</h4>
+      <p><strong>Perspective:</strong> <span class="badge bg-info">{{ result.rewritten_analysis.perspective_label }}</span></p>
+      <p><strong>Tone:</strong> <span class="badge bg-{{ result.rewritten_analysis.tone_color }}">{{ result.rewritten_analysis.tone }}</span></p>
+      <ul>
+        {% for key, value in result.rewritten_analysis.emotion_score.items() %}
+          <li>{{ key.capitalize() }}: {{ value }}</li>
+        {% endfor %}
+      </ul>
+      <div class="border p-3 bg-light" style="white-space: pre-wrap;">{{ result.rewritten_text }}</div>
+    </div>
+    <hr class="my-4">
+    <h4>🔍 Differences Highlighted</h4>
+    <p><span style="background-color:#ffcccc;">Removed</span> | <span style="background-color:#ccffcc;">Added</span></p>
+    <div class="border p-3 bg-white" style="white-space: pre-wrap;">
+    {{ result.diff_html | safe }}
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

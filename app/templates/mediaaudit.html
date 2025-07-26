@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}MediaAudit - News Analysis{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>🗞️ MediaAudit – News Bias & Summary Engine</h2>
+  <p>Paste a news article or provide a URL. We’ll summarize and analyze its framing, tone, and emotions.</p>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.url.label }} {{ form.url(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      {{ form.raw_text.label }} {{ form.raw_text(class="form-control", rows="6") }}
+    </div>
+    {{ form.submit(class="btn btn-primary") }}
+  </form>
+
+  {% if result %}
+  <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h4 class="card-title">📝 Summary</h4>
+          <br/><p>{{ result.summary }}</p>
+
+          <h5>🧭 Perspective: <span class="badge bg-info">{{ result.perspective_label }}</span></h5>
+          <h5>🎭 Tone: <span class="badge bg-{{ result.tone_color }}">{{ result.tone }}</span></h5>
+
+          <h5>🎯 Emotion Score:</h5>
+          <ul>
+            {% for key, value in result.emotion_score.items() %}
+              <li>{{ key.capitalize() }}: {{ value }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h4 class="card-title">🛠️ Editorial Suggestions</h4>
+          <br/>
+
+          <h5>🔠 Headline Effectiveness</h5>
+          <p><strong>Suggested:</strong> {{ result.headline_suggestion }}</p>
+          <p><strong>A/B Variants:</strong><br/>{{ result.headline_variants }}</p>
+
+          <h5>🔍 Fact-checking Claims</h5>
+          <ul>
+            {% for item in result.claims_factcheck %}
+              <li>{{ item | safe}}</li><br/>
+            {% endfor %}
+          </ul>
+
+          <h5>📐 Framing & Bias Analysis</h5>
+          <ul>
+            {% for item in result.bias_framing %}
+              <li>{{ item | safe}}</li>
+            {% endfor %}
+          </ul>
+
+          <h5>🎨 Tone Effect & Suggestions</h5>
+          <ul>
+            {% for item in result.tone_effect %}
+              <li>{{ item | safe}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

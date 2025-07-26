@@ -1,49 +1,66 @@
-# Flask Base App - Setup Guide
+# 📰 MediaAudit – News Bias & Summary Engine
 
-This guide will walk you step by step through setting up the Flask Base App with login, user management, and role-based access.
-
----
-
-## 📦 Prerequisites
-
-- Python 3.11+ installed
-- MySQL installed and running
-- Git (optional but recommended)
+**MediaAudit** is a Flask-based web application designed to help journalists, editors, and researchers quickly analyze news articles for **bias**, **tone**, **emotion**, and **framing**. It also provides **rewrites**, **fact-checking summaries**, and **headline suggestions** using OpenAI's GPT models.
 
 ---
 
-## 🛠️ Step-by-Step Setup Instructions
+## 🔍 Features
 
-### 1. Clone or Download the Repository
+- 🧠 **AI-Powered Article Analysis**
+  - Detects **bias** and **framing style**
+  - Classifies **tone** and emotional impact
+  - Generates **balanced rewrites** of news stories
 
-If using Git:
+- ✍️ **Rewrite Assistant**
+  - Produces clearer, neutral versions of submitted content
+  - Highlights word-level changes with color-coded diffs
+
+- 🎯 **Headline Generator**
+  - Suggests one engaging headline and two A/B testing variants
+
+- 🧾 **Framing & Tone Analysis**
+  - Breaks down how different reader groups might perceive an article
+  - Suggests adjustments for broader appeal
+
+- ✅ **Fact-Checking Summaries**
+  - Extracts and verifies major claims from the article
+  - Displays findings in reader-friendly format
+
+- 📊 **Emotion Analysis**
+  - Quantifies emotional tone (anger, joy, fear, surprise)
+
+---
+
+## 🧱 Tech Stack
+
+- **Backend:** Python, Flask, SQLAlchemy
+- **Frontend:** Bootstrap, HTML5, Jinja2
+- **AI Integration:** OpenAI API (GPT-4o fallback to GPT-3.5)
+- **Database:** MySQL (via SQLAlchemy ORM)
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the Repo
+
 ```bash
-git clone https://github.com/yourusername/flask-base-app.git
-cd flask-base-app
+git clone https://github.com/yourusername/mediaaudit.git
+cd mediaaudit
 ```
 
-Or manually extract the ZIP folder into a directory.
-
----
-
-### 2. Create a Virtual Environment and Activate It
+### 2. Create a Virtual Environment
 
 ```bash
 python -m venv venv
-venv\Scripts\activate     # Windows
-# OR
-source venv/bin/activate   # macOS/Linux
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
-
----
 
 ### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
-
----
 
 ### 4. Set Up MySQL Database
 
@@ -110,39 +127,47 @@ VALUES ('Admin', 'admin', 'your_hashed_password_here', 'super_admin', NOW());
 ### 8. Run the App
 
 ```bash
-python run.py
+flask run
 ```
 
-Visit `http://localhost:5000` in your browser and log in with:
+Visit `http://localhost:5000` in your browser.
+
+---
+
+## 🧪 Folder Structure
+
 ```
-Username: admin
-Password: admin
+mediaaudit/
+├── app.py
+├── routes.py
+├── models.py
+├── services/
+│   ├── ai_utils.py
+├── templates/
+│   ├── add_user.html
+│   ├── base.html
+│   ├── compare.html
+│   ├── dashboard.html
+│   ├── login.html
+│   ├── mediaaudit.html
+│   ├── rewrite.html
+│   └── users.html
+├── static/
+│   └── (CSS/JS assets)
+├── migrations/
+├── requirements.txt
+├── config.py
+├── run.py
+└── README.md
+
 ```
 
 ---
 
-## ✅ Features
+## 🧠 Example Use Cases
 
-- Login/logout
-- Role-based dashboard
-- Super admin user management (`/users`)
-- AdminLTE-ready UI structure
-
----
-
-## 🧪 Troubleshooting
-
-- If `flask db` gives circular import error, ensure `db` is in `extensions.py`.
-- If you get `No such command "db"`, make sure `FLASK_APP=run.py` is set correctly.
-
----
-
-## 🧹 Optional
-
-- Add AdminLTE assets to `app/static/adminlte/`
-- Build your own modules using this as a foundation
-
----
-
-Happy developing 🚀
-
+- Editors want to **rewrite articles** to remove sensationalism.
+- Journalists want **neutral rewrites** before publishing.
+- Researchers want to **analyze media framing trends**.
+- Students and readers want to **fact-check breaking news**.
+- Platforms want **automated article evaluations** to flag bias.

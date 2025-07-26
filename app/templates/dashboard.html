@@ -28,135 +28,106 @@
             <!-- Info boxes -->
             <div class="row">
               <div class="col-12 col-sm-6 col-md-3">
-                <!--begin::Small Box Widget 1-->
                 <div class="small-box" style="background-color: #17a2b8; color: white;">
                   <div class="inner">
-                    <h3>12250<span style="font-size: 0.6em; margin-left: 4px; color: #f7f7f7;">INR</span></h3>
-                    <p>Today's Sales</p>
+                    <h3>{{ total_articles }}</h3>
+                    <p>Total Articles Analyzed</p>
                   </div>
                   <div class="small-box-icon">
-                    <i class="bi bi-cash-coin" style="font-size: 4rem;"></i>
+                    <i class="bi bi-newspaper" style="font-size: 4rem;"></i>
                   </div>
-                  <a href="#" class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
-                    View all sales <i class="bi bi-arrow-right-circle"></i>
+                  <a href="{{ url_for('main.mediaaudit') }}" class="small-box-footer link-light">
+                    Analyze More <i class="bi bi-arrow-right-circle"></i>
                   </a>
                 </div>
-                <!--end::Small Box Widget 1-->
               </div>
+
               <div class="col-12 col-sm-6 col-md-3">
-                <!--begin::Small Box Widget 1-->
                 <div class="small-box" style="background-color: #28a745; color: white;">
                   <div class="inner">
-                    <h3>125</h3>
-                    <p>Total items sold</p>
+                    <h3>{{ most_common_tone }}</h3>
+                    <p>Most Common Tone</p>
                   </div>
                   <div class="small-box-icon">
-                    <i class="bi bi-card-checklist" style="font-size: 4rem;"></i>
+                    <i class="bi bi-person-bounding-box" style="font-size: 4rem;"></i>
                   </div>
-                  <a href="#" class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
-                    View all sales <i class="bi bi-arrow-right-circle"></i>
+                  <a href="{{ url_for('main.mediaaudit') }}" class="small-box-footer link-light">
+                    View Analysis <i class="bi bi-arrow-right-circle"></i>
                   </a>
                 </div>
-                <!--end::Small Box Widget 1-->
               </div>
+
               <div class="col-12 col-sm-6 col-md-3">
-                <!--begin::Small Box Widget 1-->
                 <div class="small-box" style="background-color: #ffc107; color: white;">
                   <div class="inner">
-                    <h3>25<span style="font-size: 0.6em; margin-left: 4px; color: #f7f7f7;">INR</span></h3>
-                    <p>Total Purchases</p>
+                    <h3>{{ most_common_perspective }}</h3>
+                    <p>Most Common Perspective</p>
                   </div>
                   <div class="small-box-icon">
-                    <i class="bi bi-bag" style="font-size: 4rem;"></i>
+                    <i class="bi bi-compass" style="font-size: 4rem;"></i>
                   </div>
-                  <a href="#" class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
-                    View all purchases <i class="bi bi-arrow-right-circle"></i>
+                  <a href="{{ url_for('main.mediaaudit') }}" class="small-box-footer link-light">
+                    View Breakdown <i class="bi bi-arrow-right-circle"></i>
                   </a>
                 </div>
-                <!--end::Small Box Widget 1-->
               </div>
+
               <div class="col-12 col-sm-6 col-md-3">
-                <!--begin::Small Box Widget 1-->
                 <div class="small-box" style="background-color: #dc3545; color: white;">
                   <div class="inner">
-                    <h3>2</h3>
-                    <p>Low stock items</p>
+                    <h3>{{ avg_anger }}</h3>
+                    <p>Avg Anger Score</p>
                   </div>
                   <div class="small-box-icon">
-                    <i class="bi bi-exclamation-triangle" style="font-size: 4rem;"></i>
+                    <i class="bi bi-emoji-angry" style="font-size: 4rem;"></i>
                   </div>
-                  <a href="#" class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
-                    View inventory <i class="bi bi-arrow-right-circle"></i>
+                  <a href="{{ url_for('main.mediaaudit') }}" class="small-box-footer link-light">
+                    View Emotions <i class="bi bi-arrow-right-circle"></i>
                   </a>
                 </div>
-                <!--end::Small Box Widget 1-->
               </div>
             </div>
             <!-- /.row -->
-
-
-            <!-- Info boxes -->
             <div class="row">
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                  <span class="info-box-icon text-bg-warning shadow-sm">
-                    <i class="bi bi-piggy-bank-fill"></i>
-                  </span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Month To Date Profit</span>
-                    <span class="info-box-number"><h3>25000<span style="font-size: 0.6em; margin-left: 4px;">INR</span></h3>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
+              <hr class="my-4">
+              <h4>Recently Analyzed Articles</h4>
+              <div class="table-responsive">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th>Summary</th>
+                      <th>Source</th>
+                      <th>Bias</th>
+                      <th>Tone</th>
+                      <th>Anger</th>
+                      <th>Joy</th>
+                      <th>Fear</th>
+                      <th>Surprise</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for article in recent_articles %}
+                    <tr>
+                      <td>
+                        {% if article.url and article.url != "#" %}
+                          <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer">{{ article.summary }}</a>
+                        {% else %}
+                          {{ article.summary }}
+                        {% endif %}
+                      </td>
+                      <td>{{ article.domain }}</td>
+                      <td>{{ article.bias }}</td>
+                      <td>{{ article.tone }}</td>
+                      <td>{{ article.anger }}</td>
+                      <td>{{ article.joy }}</td>
+                      <td>{{ article.fear }}</td>
+                      <td>{{ article.surprise }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
               </div>
-              <!-- /.col -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                  <span class="info-box-icon text-bg-primary shadow-sm">
-                    <i class="bi bi-cash"></i>
-                  </span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Month To Date Sales</span>
-                    <span class="info-box-number"><h3>35000<span style="font-size: 0.6em; margin-left: 4px;">INR</span></h3>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div>
-              <!-- /.col -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                  <span class="info-box-icon text-bg-danger shadow-sm">
-                    <i class="bi bi-cart-fill"></i>
-                  </span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Average Order Value</span>
-                    <span class="info-box-number"><h3>400<span style="font-size: 0.6em; margin-left: 4px;">INR</span></h3>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div>
-              <!-- /.col -->
-              <!-- fix for small devices only -->
-              <!-- <div class="clearfix hidden-md-up"></div> -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                  <span class="info-box-icon text-bg-success shadow-sm">
-                    <i class="bi bi-wallet-fill"></i>
-                  </span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Month To Date Purchases</span>
-                    <span class="info-box-number"><h3>12000<span style="font-size: 0.6em; margin-left: 4px;">INR</span></h3>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div>
-              <!-- /.col -->
             </div>
-            <!-- /.row -->
           </div>
           <!--end::Container-->
         </div>

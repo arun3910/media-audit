@@ -4,7 +4,7 @@
   <!--begin::Head-->
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Flask | Dashboard</title>
+    <title>News Spec | Dashboard</title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="title" content="AdminLTE | Dashboard v2" />
@@ -73,7 +73,7 @@
           <!--begin::End Navbar Links-->  
           <ul class="navbar-nav ms-auto">
             <!--begin::Notifications Dropdown Menu-->
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link" href="#" data-bs-toggle="dropdown" id="notification-bell">
                 <i class="bi bi-bell-fill"></i>
                 <span id="notification-count" class="navbar-badge badge text-bg-warning">2</span>
@@ -102,7 +102,7 @@
 
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
               </div>
-            </li>
+            </li> -->
             <!--end::Notifications Dropdown Menu-->
             <!--begin::Fullscreen Toggle-->
             <li class="nav-item">
@@ -163,7 +163,7 @@
             />
             <!--end::Brand Image-->
             <!--begin::Brand Text-->
-            <span class="brand-text fw-light">My Flask App</span>
+            <span class="brand-text fw-light">News Spec</span>
             <!--end::Brand Text-->
           </a>
           <!--end::Brand Link-->
@@ -187,6 +187,25 @@
                 </a>
               </li>
               {% if current_user and current_user.role in ['super_admin'] %}
+              <li class="nav-item">
+                <a href="{{ url_for('main.mediaaudit') }}" class="nav-link">
+                  <i class="nav-icon bi bi-newspaper"></i>
+                  <p>MediaAudit</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('main.compare_articles') }}" class="nav-link" >
+                  <i class="bi bi-list-columns-reverse"></i>
+                  <p>Compare Articles</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ url_for('main.rewrite_assistant') }}" class="nav-link" >
+                  <i class="bi bi-pencil-square"></i>
+                  <p>Rewrite Assistant</p>
+                </a>
+              </li>
               <li class="nav-item ">
                 <a href="{{ url_for('main.users') }}" class="nav-link {% if request.path == url_for('main.users') %}active{% endif %}">
                   <i class="nav-icon bi bi-people-fill"></i>
