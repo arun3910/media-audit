@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
-from .models import db, User, NewsInputForm, NewsArticle
+from .models import db, User, NewsArticle
+from .forms import NewsInputForm
 from .services.ai_utils import analyze_article, rewrite_article, generate_diff_html, suggest_headlines, fact_check_claims, bias_framing_analysis, tone_effect_analysis
 from urllib.parse import urlparse
 from .rbac import role_required
