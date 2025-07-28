@@ -28,5 +28,7 @@ def create_app():
         user_id = session.get('user_id')
         user = User.query.get(user_id) if user_id else None
         return dict(current_user=user)
+    
+    from . import models
 
     return app
