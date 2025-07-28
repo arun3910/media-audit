@@ -107,7 +107,9 @@ Article:
 
 def rewrite_article(text):
     prompt = f'''
-You are an editor helping improve clarity and neutrality in news reporting. Rewrite the article below to make it clearer, more neutral in tone, and concise so that users are more engrossed in reading the whole article.
+You are an editor helping improve clarity and engagement in news reporting. 
+Rewrite the article below to make it clearer and concise so that users are more engrossed in reading the whole article. 
+Analyze the current tone and improve it. Also improve perspective and emotional score.
 
 Return only the rewritten article text.
 
